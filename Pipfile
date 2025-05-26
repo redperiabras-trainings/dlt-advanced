@@ -4,8 +4,8 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-dlt = {extras = ["duckdb"], version = "*"}
 ipykernel = "*"
+dlt = {extras = ["cli"], version = "*"}
 
 [dev-packages]
 

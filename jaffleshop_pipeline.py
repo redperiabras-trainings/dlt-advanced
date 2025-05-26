@@ -12,7 +12,7 @@ page_size = 1_000
 
 
 @dlt.source(name="jaffle_shop")
-def jaffle_shop_source():
+def jaffle_shop_source() -> None:
 
     client = RESTClient(
         base_url=base_url,
@@ -34,22 +34,17 @@ def jaffle_shop_source():
         for page in client.paginate("orders", params={"page_size": page_size}):
             yield page
 
-    return [get_customers, get_orders, get_products]
+    return get_customers, get_orders, get_products
 
-
-def main() -> None:
+if __name__ == "__main__":
     pipeline = dlt.pipeline(
         destination="duckdb",
         dataset_name="optimized-jaffle_shop",
         full_refresh=True,
         progress="log",
+        dev_mode=False
     )
 
-    pipeline.extract(jaffle_shop_source())
-    pipeline.normalize()
-    load_info = pipeline.load()
+    load_info = pipeline.run(jaffle_shop_source())
     
     print(load_info)
-
-if __name__ == "__main__":
-    main()
