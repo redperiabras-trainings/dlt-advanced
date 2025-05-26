@@ -1,7 +1,7 @@
 name: Run dlt_jaffleshop_pipeline pipeline from jaffleshop_pipeline.py
 'on':
   schedule:
-  - cron: '*/30 * * * *'
+  - cron: '0 0 1 * *'
   workflow_dispatch: null
 env:
   EXTRACT__WORKERS: '3'
